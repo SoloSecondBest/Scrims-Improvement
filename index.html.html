@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Private Access</title>
+
+    <style>
+        body {
+            background: #111;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 150px;
+        }
+
+        input {
+            padding: 12px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: none;
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        #error {
+            color: red;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>🔒 Private Brawl Analyzer</h1>
+
+<p>Enter password:</p>
+
+<input type="password" id="password" placeholder="Password">
+<button onclick="login()">Enter</button>
+
+<p id="error"></p>
+
+
+<script>
+
+function login() {
+
+    let password = document.getElementById("password").value;
+
+    if (password === "56895689") {
+
+        // Sends you to your actual website
+        window.location.href = "dashboard.html";
+
+    } else {
+
+        document.getElementById("error").innerHTML =
+        "Wrong password!";
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
