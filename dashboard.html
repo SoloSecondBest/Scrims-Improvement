@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Brawl Analyzer</title>
+
+<style>
+    .map-section {
+
+    margin-bottom: 35px;
+
+}
+
+
+.map-section h2 {
+
+    text-align: left;
+    font-size: 24px;
+    margin-bottom: 15px;
+
+}
+
+
+
+.map-container {
+
+    display: flex;
+    gap: 25px;
+
+}
+
+
+
+.map-card {
+
+    width: 160px;
+    text-align: center;
+
+}
+
+
+
+.map-card h3 {
+
+    font-size: 16px;
+    margin-bottom: 8px;
+
+}
+
+
+
+.map-card img {
+
+    width: 160px;
+    height: 230px;
+
+    object-fit: cover;
+
+    border-radius: 12px;
+
+}
+
+body {
+    margin:0;
+    background:#111;
+    color:white;
+    font-family:Arial, sans-serif;
+    display:flex;
+    height:100vh;
+}
+
+
+/* LEFT SIDE */
+
+.left-sidebar {
+
+    width:180px;
+    background:#1b1b1b;
+    padding:20px;
+
+}
+
+
+.nav-button {
+
+    width:140px;
+    height:45px;
+
+    margin-bottom:15px;
+
+    background:#333;
+    color:white;
+
+    border:none;
+    border-radius:10px;
+
+    font-size:17px;
+
+    cursor:pointer;
+
+}
+
+
+.nav-button:hover {
+
+    background:#555;
+
+}
+
+
+/* ACTIVE BUTTON */
+
+.active {
+
+    background:#666;
+
+}
+
+
+
+/* CENTER */
+
+.main {
+
+    flex:1;
+    padding:40px;
+    text-align:center;
+
+}
+
+
+
+/* RIGHT SIDE */
+
+.right-sidebar {
+
+    width:180px;
+    background:#1b1b1b;
+    padding:20px;
+
+}
+
+
+
+.new-button {
+
+    width:140px;
+    height:45px;
+
+    background:#333;
+    color:white;
+
+    border:none;
+    border-radius:10px;
+
+    font-size:17px;
+
+    cursor:pointer;
+
+}
+
+
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<!-- LEFT MENU -->
+
+<div class="left-sidebar">
+
+
+<button class="nav-button active" onclick="openPage('maps', this)">
+Maps
+</button>
+
+
+<button class="nav-button" onclick="openPage('players', this)">
+Players
+</button>
+
+
+<button class="nav-button" onclick="openPage('drafts', this)">
+Drafts
+</button>
+
+
+</div>
+
+
+
+<!-- MAIN CONTENT -->
+
+<div class="main" id="content">
+
+<h1>Maps</h1>
+
+
+<div class="map-section">
+
+<h2>Bounty</h2>
+
+<div class="map-container">
+
+
+<div class="map-card">
+<h3>Dry Season</h3>
+<img src="images/dry_season.png">
+</div>
+
+
+<div class="map-card">
+<h3>Hideout</h3>
+<img src="images/hideout.png">
+</div>
+
+
+<div class="map-card">
+<h3>Layer Cake</h3>
+<img src="images/layer_cake.png">
+</div>
+
+
+</div>
+
+</div>
+
+
+
+
+
+<div class="map-section">
+
+<h2>Heist</h2>
+
+<div class="map-container">
+
+
+<div class="map-card">
+<h3>Pit Stop</h3>
+<img src="images/pit_stop.png">
+</div>
+
+
+<div class="map-card">
+<h3>Safe Zone</h3>
+<img src="images/safe_zone.png">
+</div>
+
+
+<div class="map-card">
+<h3>Kaboom Canyon</h3>
+<img src="images/kaboom_canyon.png">
+</div>
+
+
+</div>
+
+</div>
+
+
+
+
+
+<div class="map-section">
+
+<h2>Hot Zone</h2>
+
+<div class="map-container">
+
+
+<div class="map-card">
+<h3>Ring of Fire</h3>
+<img src="images/ring_of_fire.png">
+</div>
+
+
+<div class="map-card">
+<h3>Open Business</h3>
+<img src="images/open_business.png">
+</div>
+
+
+<div class="map-card">
+<h3>Dueling Beetles</h3>
+<img src="images/dueling_beetles.png">
+</div>
+
+
+</div>
+
+</div>
+
+
+
+
+
+<div class="map-section">
+
+<h2>Brawl Ball</h2>
+
+<div class="map-container">
+
+
+<div class="map-card">
+<h3>Triple Dribble</h3>
+<img src="images/triple_dribble.png">
+</div>
+
+
+<div class="map-card">
+<h3>Pinhole Punt</h3>
+<img src="images/pinhole_punt.png">
+</div>
+
+
+<div class="map-card">
+<h3>Pinball Dreams</h3>
+<img src="images/pinball_dreams.png">
+</div>
+
+
+</div>
+
+</div>
+
+
+
+
+
+<div class="map-section">
+
+<h2>Gem Grab</h2>
+
+<div class="map-container">
+
+
+<div class="map-card">
+<h3>Hard Rock Mine</h3>
+<img src="images/hard_rock_mine.png">
+</div>
+
+
+<div class="map-card">
+<h3>Gem Fort</h3>
+<img src="images/gem_fort.png">
+</div>
+
+
+<div class="map-card">
+<h3>Crystal Arcade</h3>
+<img src="images/crystal_arcade.png">
+</div>
+
+
+</div>
+
+</div>
+
+
+
+
+
+<div class="map-section">
+
+<h2>Knockout</h2>
+
+<div class="map-container">
+
+
+<div class="map-card">
+<h3>Goldarm Gulch</h3>
+<img src="images/goldarm_gulch.png">
+</div>
+
+
+<div class="map-card">
+<h3>New Horizons</h3>
+<img src="images/new_horizons.png">
+</div>
+
+
+<div class="map-card">
+<h3>Out in the Open</h3>
+<img src="images/out_in_the_open.png">
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<!-- RIGHT MENU -->
+
+<div class="right-sidebar">
+
+
+<button class="new-button">
+New
+</button>
+
+
+</div>
+
+
+
+
+<script>
+
+
+function openPage(page, button){
+
+
+    // remove active from all buttons
+
+    let buttons = document.querySelectorAll(".nav-button");
+
+    buttons.forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+
+    // add active to clicked button
+
+    button.classList.add("active");
+
+
+
+    let content = document.getElementById("content");
+
+
+
+    if(page === "maps"){
+
+
+        content.innerHTML = `
+
+        <h1>Maps</h1>
+
+        <p>
+        Your map database will appear here.
+        </p>
+
+        `;
+
+
+    }
+
+
+
+    if(page === "players"){
+
+
+        content.innerHTML = `
+
+        <h1>Players</h1>
+
+        <p>
+        Player statistics coming soon.
+        </p>
+
+        `;
+
+
+    }
+
+
+
+    if(page === "drafts"){
+
+
+        content.innerHTML = `
+
+        <h1>Drafts</h1>
+
+        <p>
+        Draft history coming soon.
+        </p>
+
+        `;
+
+
+    }
+
+
+}
+
+
+
+</script>
+
+
+</body>
+
+</html>
