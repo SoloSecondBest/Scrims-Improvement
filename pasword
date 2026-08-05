@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Private Access</title>
+</head>
+
+<body>
+
+<h2>Enter Password</h2>
+
+<input id="password" type="password">
+<button onclick="checkPassword()">Enter</button>
+
+<script>
+
+function checkPassword(){
+
+let pass = document.getElementById("password").value;
+
+if(pass === "YourPassword123"){
+    window.location.href="dashboard.html";
+}
+else{
+    alert("Wrong password");
+}
+
+}
+
+</script>
+
+</body>
+</html>
