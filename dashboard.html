@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Brawl Analyzer</title>
+
+<style>
+
+body {
+    margin:0;
+    background:#111;
+    color:white;
+    font-family:Arial, sans-serif;
+    display:flex;
+    height:100vh;
+}
+
+
+/* LEFT SIDE */
+
+.left-sidebar {
+
+    width:180px;
+    background:#1b1b1b;
+    padding:20px;
+
+}
+
+
+.nav-button {
+
+    width:140px;
+    height:45px;
+
+    margin-bottom:15px;
+
+    background:#333;
+    color:white;
+
+    border:none;
+    border-radius:10px;
+
+    font-size:17px;
+
+    cursor:pointer;
+
+}
+
+
+.nav-button:hover {
+
+    background:#555;
+
+}
+
+
+/* ACTIVE BUTTON */
+
+.active {
+
+    background:#666;
+
+}
+
+
+
+/* CENTER */
+
+.main {
+
+    flex:1;
+    padding:40px;
+    text-align:center;
+
+}
+
+
+
+/* RIGHT SIDE */
+
+.right-sidebar {
+
+    width:180px;
+    background:#1b1b1b;
+    padding:20px;
+
+}
+
+
+
+.new-button {
+
+    width:140px;
+    height:45px;
+
+    background:#333;
+    color:white;
+
+    border:none;
+    border-radius:10px;
+
+    font-size:17px;
+
+    cursor:pointer;
+
+}
+
+
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<!-- LEFT MENU -->
+
+<div class="left-sidebar">
+
+
+<button class="nav-button active" onclick="openPage('maps', this)">
+Maps
+</button>
+
+
+<button class="nav-button" onclick="openPage('players', this)">
+Players
+</button>
+
+
+<button class="nav-button" onclick="openPage('drafts', this)">
+Drafts
+</button>
+
+
+</div>
+
+
+
+<!-- MAIN CONTENT -->
+
+<div class="main" id="content">
+
+<h1>Maps</h1>
+
+<p>
+Select a map to analyze.
+</p>
+
+</div>
+
+
+
+<!-- RIGHT MENU -->
+
+<div class="right-sidebar">
+
+
+<button class="new-button">
+New
+</button>
+
+
+</div>
+
+
+
+
+<script>
+
+
+function openPage(page, button){
+
+
+    // remove active from all buttons
+
+    let buttons = document.querySelectorAll(".nav-button");
+
+    buttons.forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+
+    // add active to clicked button
+
+    button.classList.add("active");
+
+
+
+    let content = document.getElementById("content");
+
+
+
+    if(page === "maps"){
+
+
+        content.innerHTML = `
+
+        <h1>Maps</h1>
+
+        <p>
+        Your map database will appear here.
+        </p>
+
+        `;
+
+
+    }
+
+
+
+    if(page === "players"){
+
+
+        content.innerHTML = `
+
+        <h1>Players</h1>
+
+        <p>
+        Player statistics coming soon.
+        </p>
+
+        `;
+
+
+    }
+
+
+
+    if(page === "drafts"){
+
+
+        content.innerHTML = `
+
+        <h1>Drafts</h1>
+
+        <p>
+        Draft history coming soon.
+        </p>
+
+        `;
+
+
+    }
+
+
+}
+
+
+
+</script>
+
+
+</body>
+
+</html>
