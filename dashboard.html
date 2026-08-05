@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Brawl Analyzer</title>
+
+
+<style>
+
+
+* {
+    box-sizing: border-box;
+}
+
+
+
+body {
+
+    margin:0;
+    background:#111;
+    color:white;
+    font-family:Arial, sans-serif;
+
+}
+
+
+
+/* LEFT SIDEBAR */
+
+.left-sidebar {
+
+    position:fixed;
+
+    left:0;
+    top:0;
+
+    width:180px;
+
+    height:100vh;
+
+    background:#1b1b1b;
+
+    padding:20px;
+
+}
+
+
+
+/* RIGHT SIDEBAR */
+
+.right-sidebar {
+
+    position:fixed;
+
+    right:0;
+    top:0;
+
+    width:180px;
+
+    height:100vh;
+
+    background:#1b1b1b;
+
+    padding:20px;
+
+}
+
+
+
+/* CENTER */
+
+.main {
+
+    margin-left:180px;
+
+    margin-right:180px;
+
+    padding:40px;
+
+    min-height:100vh;
+
+    text-align:center;
+
+}
+
+
+
+/* BUTTONS */
+
+
+.nav-button,
+.new-button {
+
+
+    width:140px;
+
+    height:45px;
+
+    margin-bottom:15px;
+
+    background:#333;
+
+    color:white;
+
+    border:none;
+
+    border-radius:10px;
+
+    font-size:17px;
+
+    cursor:pointer;
+
+
+}
+
+
+
+.nav-button:hover,
+.new-button:hover {
+
+    background:#555;
+
+}
+
+
+
+.active {
+
+    background:#666;
+
+}
+
+
+
+
+
+/* MAPS */
+
+
+.map-section {
+
+    margin-bottom:40px;
+
+}
+
+
+
+.map-section h2 {
+
+    text-align:left;
+
+    font-size:24px;
+
+}
+
+
+
+.map-container {
+
+    display:flex;
+
+    gap:25px;
+
+}
+
+
+
+.map-card {
+
+    width:160px;
+
+}
+
+
+
+.map-card h3 {
+
+    text-align:center;
+
+    font-size:16px;
+
+}
+
+
+
+.map-card img {
+
+
+    width:160px;
+
+    height:230px;
+
+    object-fit:cover;
+
+    border-radius:12px;
+
+
+}
+
+.brawler-section{
+
+margin-bottom:40px;
+
+}
+
+
+.brawler-section h2{
+
+text-align:left;
+
+}
+
+
+
+.brawler-grid{
+
+display:grid;
+
+grid-template-columns:repeat(9, 1fr);
+
+gap:15px;
+
+}
+
+
+
+.brawler-card{
+
+background:#222;
+
+border-radius:12px;
+
+padding:10px;
+
+text-align:center;
+
+}
+
+
+
+.brawler-card img{
+
+width:80px;
+
+height:80px;
+
+object-fit:contain;
+
+}
+
+
+
+.brawler-card p{
+
+margin:5px;
+
+font-size:14px;
+
+}
+
+
+</style>
+
+
+</head>
+
+
+
+<body>
+
+
+<div class="left-sidebar">
+
+
+<button class="nav-button active" onclick="openPage('maps', this)">
+Maps
+</button>
+
+
+<button class="nav-button" onclick="openPage('players', this)">
+Players
+</button>
+
+
+<button class="nav-button" onclick="openPage('drafts', this)">
+Drafts
+</button>
+
+
+<button class="nav-button" onclick="openPage('brawlers', this)">
+Brawlers
+</button>
+
+
+</div>
+
+
+
+
+<div class="main" id="content">
+
+
+<!-- YOUR MAP CODE GOES HERE -->
+
+</div>
+
+
+<div class="right-sidebar">
+
+
+<button class="new-button">
+New
+</button>
+
+</div>
+
+
+<script src="maps.js"></script>
+<script src="brawlers.js"></script>
+<script src="main.js"></script>
+
+</body>
+
+</html>
