@@ -4,6 +4,8 @@ let selectedEnemyBrawlers = [null, null, null];
 
 let selectedYourBrawlers = [null, null, null];
 
+let selectedRanks = ["Rank", "Rank", "Rank"];
+
 const allBrawlers = Object.values(brawlers).flat();
 
 function openPage(page, button){
@@ -58,6 +60,7 @@ function openNewMatch(){
 
     selectedEnemyBrawlers = [null, null, null];
     selectedYourBrawlers = [null, null, null];
+    selectedRanks = ["Rank", "Rank", "Rank"];
 
     document.getElementById("popupBackground").style.display="flex";
 
@@ -282,30 +285,20 @@ function selectMap(map){
 
             <div class="rank-container">
 
+               ${selectedRanks.map((rank, index) => `
 
-                <div class="rank-box">
-                <button class="rank-button"
-                onclick="event.stopPropagation();openRankSelector(this)">
-                Rank ▼
-                </button>
-                </div>
+                   <div class="rank-box">
 
+                      <button
+                         class="rank-button"
+                         onclick="event.stopPropagation(); openRankSelector(this, ${index})"
+                      >
+                         ${rank} ▼
+                      </button>
 
-                <div class="rank-box">
-                <button class="rank-button"
-                onclick="event.stopPropagation();openRankSelector(this)">
-                Rank ▼
-                </button>
-                </div>
+                    </div>
 
-
-                <div class="rank-box">
-                <button class="rank-button"
-                onclick="event.stopPropagation();openRankSelector(this)">
-                Rank ▼
-                </button>
-                </div>
-
+                `).join("")}
 
             </div>
 
@@ -469,12 +462,14 @@ function openYourBrawlerSelector(event, index){
 
     let html = `
 
+    <div class="enemy-brawler-picker-panel">
+
     <input
         class="brawler-search"
-        id="yourBrawlerSearch${index}"
+        id="enemyBrawlerSearch${index}"
         type="text"
         placeholder="Search brawler..."
-        oninput="searchYourBrawlers(${index})"
+        oninput="searchEnemyBrawlers(${index})"
     >
 
     <div class="brawler-picker-dropdown">
@@ -540,10 +535,11 @@ function openYourBrawlerSelector(event, index){
 
     html += `
 
+       </div>
+
     </div>
 
     `;
-
 
     container.innerHTML = html;
 
@@ -825,31 +821,30 @@ function selectEnemyBrawler(event, slotIndex, brawlerIndex) {
 
 
 
-function openRankSelector(button){
-
+function openRankSelector(button, index){
 
     closeActiveDropdown();
 
 
-    let container=button.parentElement;
+    let container = button.parentElement;
 
 
-    container.dataset.closed=`
+    container.dataset.closed = `
 
-    <button class="rank-button"
-    onclick="event.stopPropagation();openRankSelector(this)">
-    Rank ▼
+    <button
+        class="rank-button"
+        onclick="event.stopPropagation(); openRankSelector(this, ${index})"
+    >
+        ${selectedRanks[index]} ▼
     </button>
 
     `;
 
 
-
-    activeDropdown=container;
-
+    activeDropdown = container;
 
 
-    let ranks=[
+    let ranks = [
         "L1",
         "L2",
         "L3",
@@ -861,40 +856,34 @@ function openRankSelector(button){
     ];
 
 
-
-    let html="";
-
+    let html = "";
 
 
-    ranks.forEach(rank=>{
+    ranks.forEach(rank => {
 
+        html += `
 
-        html+=`
-
-        <div class="rank-option"
-        onclick="selectRank(this,'${rank}')">
-
-        ${rank}
-
+        <div
+            class="rank-option"
+            onclick="selectRank(this, '${rank}', ${index})"
+        >
+            ${rank}
         </div>
 
         `;
 
-
     });
 
 
-
-    container.innerHTML=`
+    container.innerHTML = `
 
     <div class="rank-dropdown">
 
-    ${html}
+        ${html}
 
     </div>
 
     `;
-
 
 }
 
@@ -905,28 +894,27 @@ function openRankSelector(button){
 
 
 
-function selectRank(element,rank){
+function selectRank(element, rank, index){
+
+    selectedRanks[index] = rank;
 
 
-    let container=element.parentElement.parentElement;
+    let container = element.parentElement.parentElement;
 
 
+    container.innerHTML = `
 
-    container.innerHTML=`
-
-    <button class="rank-button"
-    onclick="event.stopPropagation();openRankSelector(this)">
-
-    ${rank} ▼
-
+    <button
+        class="rank-button"
+        onclick="event.stopPropagation(); openRankSelector(this, ${index})"
+    >
+        ${rank} ▼
     </button>
-
 
     `;
 
 
-    activeDropdown=null;
-
+    activeDropdown = null;
 
 }
 
