@@ -1,54 +1,133 @@
-let activeDropdown = null;
+<!DOCTYPE html>
+<html>
 
-let selectedEnemyBrawlers = [null, null, null];
+<head>
 
-let selectedYourBrawlers = [null, null, null];
-
-let selectedRanks = ["Rank", "Rank", "Rank"];
-
-const allBrawlers = Object.values(brawlers).flat();
-
-function openPage(page, button){
-
-    let buttons = document.querySelectorAll(".nav-button");
-
-    buttons.forEach(btn=>{
-        btn.classList.remove("active");
-    });
+<title>Brawl Analyzer</title>
 
 
-    button.classList.add("active");
+<style>
 
 
-    let content = document.getElementById("content");
+* {
+    box-sizing: border-box;
+}
 
 
-    if(page === "maps"){
-        loadMaps();
-    }
+
+body {
+
+    margin:0;
+    background:#111;
+    color:white;
+    font-family:Arial, sans-serif;
+
+}
 
 
-    if(page === "brawlers"){
-        loadBrawlers();
-    }
+
+/* LEFT SIDEBAR */
+
+.left-sidebar {
+
+    position:fixed;
+
+    left:0;
+    top:0;
+
+    width:180px;
+
+    height:100vh;
+
+    background:#1b1b1b;
+
+    padding:20px;
+
+}
 
 
-    if(page === "players"){
 
-        content.innerHTML = `
-        <h1>Players</h1>
-        `;
+/* RIGHT SIDEBAR */
 
-    }
+.right-sidebar {
+
+    position:fixed;
+
+    right:0;
+    top:0;
+
+    width:180px;
+
+    height:100vh;
+
+    background:#1b1b1b;
+
+    padding:20px;
+
+}
 
 
-    if(page === "drafts"){
 
-        content.innerHTML = `
-        <h1>Drafts</h1>
-        `;
+/* CENTER */
 
-    }
+.main {
+
+    margin-left:180px;
+
+    margin-right:180px;
+
+    padding:40px;
+
+    min-height:100vh;
+
+    text-align:center;
+
+}
+
+
+
+/* BUTTONS */
+
+
+.nav-button,
+.new-button {
+
+
+    width:140px;
+
+    height:45px;
+
+    margin-bottom:15px;
+
+    background:#333;
+
+    color:white;
+
+    border:none;
+
+    border-radius:10px;
+
+    font-size:17px;
+
+    cursor:pointer;
+
+
+}
+
+
+
+.nav-button:hover,
+.new-button:hover {
+
+    background:#555;
+
+}
+
+
+
+.active {
+
+    background:#666;
 
 }
 
@@ -56,914 +135,733 @@ function openPage(page, button){
 
 
 
-function openNewMatch(){
-
-    selectedEnemyBrawlers = [null, null, null];
-    selectedYourBrawlers = [null, null, null];
-    selectedRanks = ["Rank", "Rank", "Rank"];
-
-    document.getElementById("popupBackground").style.display="flex";
+/* MAPS */
 
 
-    document.getElementById("matchMapArea").innerHTML = `
+.map-section {
 
-    <div class="map-right-side">
-
-        <div id="mapSelectorContainer">
-
-            <button class="center-map-button"
-            onclick="event.stopPropagation(); openMapSelector()">
-
-            Select a map ▼
-
-            </button>
-
-        </div>
-
-    </div>
-
-    `;
+    margin-bottom:40px;
 
 }
 
 
 
+.map-section h2 {
 
+    text-align:left;
 
-function closeNewMatch(){
-
-    document.getElementById("popupBackground").style.display="none";
-
-    activeDropdown=null;
-
-
-    document.getElementById("matchMapArea").innerHTML="";
+    font-size:24px;
 
 }
 
 
 
+.map-container {
 
+    display:flex;
 
-function openMapSelector(){
-
-
-    closeActiveDropdown();
-
-
-    let container=document.getElementById("mapSelectorContainer");
-
-
-    container.dataset.closed=`
-
-    <button class="center-map-button"
-    onclick="event.stopPropagation(); openMapSelector()">
-
-    Select a map ▼
-
-    </button>
-
-    `;
-
-
-
-    activeDropdown=container;
-
-
-
-   let html=`
-
-   <div class="map-picker-panel">
-
-        <input 
-           id="mapSearch"
-           placeholder="Search map..."
-           onkeyup="searchMaps()"
-        >
-
-        <div class="map-dropdown">
-
-    `;
-
-
-
-   for (const mode in maps) {
-
-    maps[mode].forEach(map => {
-
-        html += `
-        <div class="map-option"
-        onclick='selectMap(${JSON.stringify({
-            ...map,
-            mode: mode
-        })})'>
-
-            <span>${map.name}</span>
-
-            <img src="${map.image}">
-
-        </div>
-        `;
-
-    });
+    gap:25px;
 
 }
 
 
 
-    html+=`
+.map-card {
 
-       </div>
-
-    </div>
-
-    `;
-
-
-
-    container.innerHTML=html;
-
-
-    document.getElementById("mapSearch").focus();
-
+    width:160px;
 
 }
 
 
 
+.map-card h3 {
 
+    text-align:center;
 
-
-function searchMaps(){
-
-
-    let input=document
-    .getElementById("mapSearch")
-    .value
-    .toLowerCase();
-
-
-
-    document.querySelectorAll(".map-option")
-    .forEach(option=>{
-
-
-        if(option.innerText.toLowerCase().includes(input)){
-
-            option.style.display="flex";
-
-        }
-
-        else{
-
-            option.style.display="none";
-
-        }
-
-
-    });
-
+    font-size:16px;
 
 }
 
 
 
+.map-card img {
+
+
+    width:160px;
+
+    height:230px;
+
+    object-fit:cover;
+
+    border-radius:12px;
+
+
+}
+
+.brawler-section{
+
+margin-bottom:40px;
+
+}
+
+
+.brawler-section h2{
+
+text-align:left;
+
+}
+
+
+
+.brawler-grid{
+
+display:grid;
+
+grid-template-columns:repeat(9, 1fr);
+
+gap:15px;
+
+}
+
+
+
+.brawler-card{
+
+background:#222;
+
+border-radius:12px;
+
+padding:10px;
+
+text-align:center;
+
+}
+
+
+
+.brawler-card img{
+
+width:80px;
+
+height:80px;
+
+object-fit:contain;
+
+}
+
+
+
+.brawler-card p{
+
+margin:5px;
+
+font-size:14px;
+
+}
+
+/* POPUP BACKGROUND */
+
+.popup-background{
+
+display:none;
+
+position:fixed;
+
+left:0;
+top:0;
+
+width:100%;
+height:100%;
+
+background:rgba(0,0,0,0.7);
+
+justify-content:center;
+
+align-items:center;
+
+z-index:1000;
+
+}
+
+
+
+/* POPUP */
+
+.popup{
+
+width:850px;
+
+min-height:600px;
+
+background:#1f1f1f;
+
+border-radius:18px;
+
+padding:30px;
+
+position:relative;
+
+}
+
+
+
+/* CLOSE BUTTON */
+
+.close-button{
+
+position:absolute;
+
+right:20px;
+
+top:20px;
+
+width:40px;
+
+height:40px;
+
+background:#333;
+
+border:none;
+
+border-radius:10px;
+
+color:white;
+
+font-size:20px;
+
+cursor:pointer;
+
+}
+
+
+
+.close-button:hover{
+
+background:#555;
+
+}
+
+/* MAP AREA */
+
+
+.match-map-area{
+
+display:flex;
+
+justify-content:center;
+
+align-items:flex-start;
+
+margin-top:40px;
+
+min-height:500px;
+
+width:100%;
+
+}
+
+
+
+.center-map-button{
+
+width:180px;
+
+height:50px;
+
+background:#333;
+
+color:white;
+
+border:none;
+
+border-radius:12px;
+
+font-size:17px;
+
+cursor:pointer;
+
+}
+
+
+
+.selected-map-layout{
+
+display:flex;
+
+align-items:flex-start;
+
+justify-content:space-between;
+
+width:100%;
+
+}
+
+
+
+.selected-map-image{
+
+text-align:center;
+
+width:300px;
+
+}
+
+
+
+.selected-map-image img{
+
+width:220px;
+
+height:300px;
+
+object-fit:cover;
+
+border-radius:15px;
+
+}
+
+
+
+.selected-map-info{
+
+width:300px;
+
+display:flex;
+
+justify-content:flex-start;
+
+}
+
+.map-dropdown{
+
+width:300px;
+
+max-height:300px;
+
+overflow-y:auto;
+
+background:#222;
+
+border-radius:12px;
+
+padding:10px;
+
+}
+
+
+
+.map-option{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:8px;
+
+cursor:pointer;
+
+border-radius:8px;
+
+}
+
+
+
+.map-option:hover{
+
+background:#444;
+
+}
+
+
+
+.map-option img{
+
+width:35px;
+
+height:45px;
+
+object-fit:cover;
+
+border-radius:5px;
+
+}
+
+
+
+.map-mode{
+
+font-size:14px;
+
+color:#aaa;
+
+}
+
+.map-right-side{
+
+width:300px;
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+gap:25px;
+
+}
+
+.rank-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.rank-box {
+    width: 85px;
+    height: 45px;
+    position: relative;
+}
+
+.rank-button {
+    width: 85px;
+    height: 45px;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.rank-button:hover {
+    background: #555;
+}
+
+.rank-dropdown{
+    position:absolute;
+    top:50px;
+    left:0;
+
+    width:95px;          /* slightly wider */
+    max-height:220px;
+
+    overflow-y:auto;
+    overflow-x:hidden;   /* <-- hides horizontal scrollbar */
+
+    background:#222;
+    border-radius:10px;
+    padding:5px;
+
+    z-index:100;
+    box-shadow:0 8px 20px rgba(0,0,0,.45);
+}
+
+.rank-option{
+    width:100%;
+    height:35px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border-radius:8px;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.rank-option:hover {
+    background: #555;
+}
+
+.team-title{
+    margin:5px 0 0;
+    font-size:18px;
+    text-align:center;
+}
+
+
+.enemy-brawler-container{
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    align-items:flex-start;
+    gap:10px;
+}
+
+
+.enemy-brawler-slot{
+    width:85px;
+    min-height:110px;
+    text-align:center;
+    position:relative;
+}
+
+
+.empty-brawler-button,
+.selected-brawler-button{
+    width:85px;
+    height:85px;
+    background:#333;
+    color:white;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+
+.empty-brawler-button:hover,
+.selected-brawler-button:hover{
+    background:#555;
+}
+
+
+.selected-brawler-button{
+    padding:5px;
+}
+
+
+.selected-brawler-button img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+
+.enemy-brawler-slot p{
+    margin:6px 0 0;
+    font-size:13px;
+    line-height:16px;
+}
+
+
+.brawler-search{
+    width:210px;
+    height:38px;
+    background:#333;
+    color:white;
+    border:none;
+    border-radius:8px;
+    padding:0 10px;
+    font-size:14px;
+    outline:none;
+}
+
+.enemy-brawler-slot{
+    width:85px;
+    min-height:110px;
+    text-align:center;
+    position:relative;
+}
+
+
+.enemy-brawler-picker-panel{
+    position:absolute;
+
+    top:0;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:210px;
+
+    z-index:300;
+}
+
+
+.brawler-picker-dropdown{
+    width:210px;
+    max-height:260px;
+    overflow-y:auto;
+    margin-top:6px;
+    padding:6px;
+    background:#222;
+    border-radius:10px;
+    position:relative;
+    z-index:20;
+}
+
+
+.brawler-picker-option{
+    height:48px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:5px 8px;
+    border-radius:7px;
+    cursor:pointer;
+}
+
+
+.brawler-picker-option:hover{
+    background:#555;
+}
+
+
+.brawler-picker-option img{
+    width:38px;
+    height:38px;
+    object-fit:contain;
+}
+
+.disabled-brawler-option {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.disabled-brawler-option:hover {
+    background: transparent;
+}
+
+.your-brawler-container{
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    align-items:flex-start;
+    gap:10px;
+}
+
+
+.your-brawler-slot{
+    width:85px;
+    min-height:110px;
+    text-align:center;
+    position:relative;
+}
+
+
+.your-brawler-slot p{
+    margin:6px 0 0;
+    font-size:13px;
+    line-height:16px;
+}
+
+#mapSelectorContainer{
+    position:relative;
+}
+
+.map-picker-panel{
+    position:absolute;
+    top:0;
+    left:50%;
+    transform:translateX(-50%);
+
+    width:300px;
+    z-index:600;
+}
+
+#mapSearch{
+    width:300px;
+    height:40px;
+
+    background:#333;
+    color:white;
+
+    border:none;
+    border-radius:10px;
+
+    padding:0 12px;
+    margin-bottom:6px;
+
+    font-size:14px;
+    outline:none;
+}
+
+</style>
+
+
+</head>
+
+
+
+<body>
+
+
+<div class="left-sidebar">
+
+
+<button class="nav-button active" onclick="openPage('maps', this)">
+Maps
+</button>
+
+
+<button class="nav-button" onclick="openPage('players', this)">
+Players
+</button>
+
+
+<button class="nav-button" onclick="openPage('drafts', this)">
+Drafts
+</button>
+
+
+<button class="nav-button" onclick="openPage('brawlers', this)">
+Brawlers
+</button>
+
+
+</div>
 
 
 
 
-function selectMap(map){
+<div class="main" id="content">
 
 
-    closeActiveDropdown();
+<!-- YOUR MAP CODE GOES HERE -->
+
+</div>
 
 
-    let area=document.getElementById("matchMapArea");
+<div class="right-sidebar">
 
 
+<button class="new-button" onclick="openNewMatch()">
+New
+</button>
 
-    area.innerHTML=`
+</div>
 
+<div id="popupBackground" class="popup-background">
 
-    <div class="selected-map-layout">
+    <div class="popup">
 
-
-
-        <div class="selected-map-image">
-
-
-            <h2>${map.name}</h2>
-
-
-            <img src="${map.image}">
+        <button class="close-button" onclick="closeNewMatch()">
+            ✕
+        </button>
 
 
-        </div>
+        <div id="matchMapArea" class="match-map-area">
 
 
-
-
-        <div class="map-right-side">
-
+            <div class="map-right-side">
 
             <div id="mapSelectorContainer">
 
-
-                <button class="center-map-button"
-                onclick="event.stopPropagation(); openMapSelector()">
-
-
-                ${map.mode} ▼
-
-
-                </button>
-
-
-            </div>
-
-
-
-
-            <div class="rank-container">
-
-               ${selectedRanks.map((rank, index) => `
-
-                   <div class="rank-box">
-
-                      <button
-                         class="rank-button"
-                         onclick="event.stopPropagation(); openRankSelector(this, ${index})"
-                      >
-                         ${rank} ▼
-                      </button>
-
-                    </div>
-
-                `).join("")}
-
-            </div>
-
-            <h3 class="team-title">Enemy Team</h3>
-
-            <div class="enemy-brawler-container">
-
-                ${createEnemyBrawlerSlot(0)}
-                ${createEnemyBrawlerSlot(1)}
-                ${createEnemyBrawlerSlot(2)}
-
-            </div>
-
-            <h3 class="team-title">Your Team</h3>
-
-            <div class="your-brawler-container">
-
-                ${createYourBrawlerSlot(0)}
-                ${createYourBrawlerSlot(1)}
-                ${createYourBrawlerSlot(2)}
-
-            </div>
-
-        </div>
-
-
-    </div>
-
-
-    `;
-
-
-}
-
-function createEnemyBrawlerSlot(index){
-
-    const selectedBrawler = selectedEnemyBrawlers[index];
-
-    if(selectedBrawler){
-
-        return `
-        <div
-            class="enemy-brawler-slot"
-            id="enemyBrawlerSlot${index}"
-        >
-
-            <button
-                class="selected-brawler-button"
-                onclick="openEnemyBrawlerSelector(event, ${index})"
-            >
-                <img
-                    src="${selectedBrawler.image}"
-                    alt="${selectedBrawler.name}"
-                >
+            <button class="center-map-button" onclick="openMapSelector()">
+              Select a map ▼
             </button>
 
-            <p>${selectedBrawler.name}</p>
+            </div>
+
+            </div>
+
 
         </div>
-        `;
-    }
 
-    return `
-    <div
-        class="enemy-brawler-slot"
-        id="enemyBrawlerSlot${index}"
-    >
-
-        <button
-            class="empty-brawler-button"
-            onclick="openEnemyBrawlerSelector(event, ${index})"
-        >
-            Brawler ▼
-        </button>
-
-    </div>
-    `;
-}
-
-
-function createYourBrawlerSlot(index){
-
-    const selectedBrawler = selectedYourBrawlers[index];
-
-    if(selectedBrawler){
-
-        return `
-        <div
-            class="your-brawler-slot"
-            id="yourBrawlerSlot${index}"
-        >
-
-            <button
-                class="selected-brawler-button"
-                onclick="openYourBrawlerSelector(event, ${index})"
-            >
-                <img
-                    src="${selectedBrawler.image}"
-                    alt="${selectedBrawler.name}"
-                >
-            </button>
-
-            <p>${selectedBrawler.name}</p>
-
-        </div>
-        `;
-    }
-
-    return `
-    <div
-        class="your-brawler-slot"
-        id="yourBrawlerSlot${index}"
-    >
-
-        <button
-            class="empty-brawler-button"
-            onclick="openYourBrawlerSelector(event, ${index})"
-        >
-            Brawler ▼
-        </button>
-
-    </div>
-    `;
-}
-
-function openYourBrawlerSelector(event, index){
-
-    event.stopPropagation();
-
-    closeActiveDropdown();
-
-
-    const container = document.getElementById(
-        `yourBrawlerSlot${index}`
-    );
-
-
-    container.dataset.closed = createYourBrawlerSlot(index);
-
-    activeDropdown = container;
-
-
-    const alreadySelectedNames = [
-
-        ...selectedEnemyBrawlers,
-
-        ...selectedYourBrawlers.map((brawler, slotIndex) => {
-
-            if(slotIndex === index){
-                return null;
-            }
-
-            return brawler;
-
-        })
-
-    ]
-    .filter(Boolean)
-    .map(brawler => brawler.name);
-
-
-    let html = `
-
-    <input
-       class="brawler-search"
-       id="yourBrawlerSearch${index}"
-       type="text"
-       placeholder="Search brawler..."
-       oninput="searchYourBrawlers(${index})"
-    >
-
-    <div class="brawler-picker-dropdown">
-
-    `;
-
-
-    allBrawlers.forEach((brawler, brawlerIndex) => {
-
-        const isAlreadySelected =
-            alreadySelectedNames.includes(brawler.name);
-
-
-        if(isAlreadySelected){
-
-            html += `
-
-            <div
-                class="brawler-picker-option disabled-brawler-option"
-                data-brawler-name="${brawler.name.toLowerCase()}"
-            >
-
-                <span>${brawler.name}</span>
-
-                <img
-                    src="${brawler.image}"
-                    alt="${brawler.name}"
-                >
-
-            </div>
-
-            `;
-
-        } else {
-
-            html += `
-
-            <div
-                class="brawler-picker-option"
-                data-brawler-name="${brawler.name.toLowerCase()}"
-                onclick="selectYourBrawler(
-                    event,
-                    ${index},
-                    ${brawlerIndex}
-                )"
-            >
-
-                <span>${brawler.name}</span>
-
-                <img
-                    src="${brawler.image}"
-                    alt="${brawler.name}"
-                >
-
-            </div>
-
-            `;
-
-        }
-
-    });
-
-
-    html += `
 
     </div>
 
-    `;
+</div>
 
-    container.innerHTML = html;
 
+<script src="maps.js"></script>
+<script src="brawlers.js"></script>
+<script src="main.js"></script>
 
-    document
-        .getElementById(`yourBrawlerSearch${index}`)
-        .focus();
+</body>
 
-}
-
-function searchYourBrawlers(index){
-
-    const searchInput = document
-        .getElementById(`yourBrawlerSearch${index}`)
-        .value
-        .toLowerCase();
-
-
-    const options = document.querySelectorAll(
-        `#yourBrawlerSlot${index} .brawler-picker-option`
-    );
-
-
-    options.forEach(option => {
-
-        const brawlerName = option.dataset.brawlerName;
-
-        option.style.display = brawlerName.includes(searchInput)
-            ? "flex"
-            : "none";
-
-    });
-
-}
-
-function selectYourBrawler(event, slotIndex, brawlerIndex){
-
-    event.stopPropagation();
-
-
-    const chosenBrawler = allBrawlers[brawlerIndex];
-
-
-    const duplicateExists = [
-
-        ...selectedEnemyBrawlers,
-
-        ...selectedYourBrawlers.filter(
-            (brawler, index) => index !== slotIndex
-        )
-
-    ].some(selectedBrawler => {
-
-        return (
-            selectedBrawler &&
-            selectedBrawler.name === chosenBrawler.name
-        );
-
-    });
-
-
-    if(duplicateExists){
-        return;
-    }
-
-
-    selectedYourBrawlers[slotIndex] = chosenBrawler;
-
-
-    const container = document.getElementById(
-        `yourBrawlerSlot${slotIndex}`
-    );
-
-
-    container.outerHTML = createYourBrawlerSlot(slotIndex);
-
-
-    activeDropdown = null;
-}
-
-function openEnemyBrawlerSelector(event, index) {
-
-    event.stopPropagation();
-
-    closeActiveDropdown();
-
-
-    const container = document.getElementById(
-        `enemyBrawlerSlot${index}`
-    );
-
-
-    container.dataset.closed = createEnemyBrawlerSlot(index);
-
-    activeDropdown = container;
-
-
-    const alreadySelectedNames = [
-
-        ...selectedYourBrawlers,
-
-        ...selectedEnemyBrawlers.map((brawler, slotIndex) => {
-
-        if(slotIndex === index){
-            return null;
-        }
-
-        return brawler;
-
-        })
-
-    ]
-        .filter(Boolean)
-        .map(brawler => brawler.name);
-
-    let html = `
-
-    <div class="enemy-brawler-picker-panel">
-
-        <input
-            class="brawler-search"
-            id="enemyBrawlerSearch${index}"
-            type="text"
-            placeholder="Search brawler..."
-            oninput="searchEnemyBrawlers(${index})"
-        >
-
-        <div class="brawler-picker-dropdown">
-
-    `;
-
-
-    allBrawlers.forEach((brawler, brawlerIndex) => {
-
-        const isAlreadySelected =
-            alreadySelectedNames.includes(brawler.name);
-
-
-        if (isAlreadySelected) {
-
-            html += `
-
-            <div
-                class="brawler-picker-option disabled-brawler-option"
-                data-brawler-name="${brawler.name.toLowerCase()}"
-            >
-
-                <span>${brawler.name}</span>
-
-                <img
-                    src="${brawler.image}"
-                    alt="${brawler.name}"
-                >
-
-            </div>
-
-            `;
-
-        } else {
-
-            html += `
-
-            <div
-                class="brawler-picker-option"
-                data-brawler-name="${brawler.name.toLowerCase()}"
-                onclick="selectEnemyBrawler(
-                    event,
-                    ${index},
-                    ${brawlerIndex}
-                )"
-            >
-
-                <span>${brawler.name}</span>
-
-                <img
-                    src="${brawler.image}"
-                    alt="${brawler.name}"
-                >
-
-            </div>
-
-            `;
-
-        }
-
-    });
-
-
-    html += `
-
-      </div>
-
-    </div>
-
-    `;
-
-
-    container.innerHTML = html;
-
-
-    document
-        .getElementById(`enemyBrawlerSearch${index}`)
-        .focus();
-
-}
-
-function searchEnemyBrawlers(index){
-
-    const searchInput = document
-        .getElementById(`enemyBrawlerSearch${index}`)
-        .value
-        .toLowerCase();
-
-
-    const options = document.querySelectorAll(
-        `#enemyBrawlerSlot${index} .brawler-picker-option`
-    );
-
-
-    options.forEach(option => {
-
-        const brawlerName = option.dataset.brawlerName;
-
-        option.style.display = brawlerName.includes(searchInput)
-            ? "flex"
-            : "none";
-
-    });
-
-}
-
-function selectEnemyBrawler(event, slotIndex, brawlerIndex) {
-
-    event.stopPropagation();
-
-
-    const chosenBrawler = allBrawlers[brawlerIndex];
-
-
-    const duplicateExists = [
-
-    ...selectedYourBrawlers,
-
-    ...selectedEnemyBrawlers.filter(
-        (brawler, index) => index !== slotIndex
-    )
-
-    ].some(selectedBrawler => {
-
-    return (
-        selectedBrawler &&
-        selectedBrawler.name === chosenBrawler.name
-    );
-
-    });
-
-
-    if (duplicateExists) {
-        return;
-    }
-
-
-    selectedEnemyBrawlers[slotIndex] = chosenBrawler;
-
-
-    const container = document.getElementById(
-        `enemyBrawlerSlot${slotIndex}`
-    );
-
-
-    container.outerHTML = createEnemyBrawlerSlot(slotIndex);
-
-
-    activeDropdown = null;
-
-}
-
-
-
-
-
-
-
-
-
-function openRankSelector(button, index){
-
-    closeActiveDropdown();
-
-
-    let container = button.parentElement;
-
-
-    container.dataset.closed = `
-
-    <button
-        class="rank-button"
-        onclick="event.stopPropagation(); openRankSelector(this, ${index})"
-    >
-        ${selectedRanks[index]} ▼
-    </button>
-
-    `;
-
-
-    activeDropdown = container;
-
-
-    let ranks = [
-        "L1",
-        "L2",
-        "L3",
-        "M1",
-        "M2",
-        "M3",
-        "Pro",
-        "Pro+MP"
-    ];
-
-
-    let html = "";
-
-
-    ranks.forEach(rank => {
-
-        html += `
-
-        <div
-            class="rank-option"
-            onclick="selectRank(this, '${rank}', ${index})"
-        >
-            ${rank}
-        </div>
-
-        `;
-
-    });
-
-
-    container.innerHTML = `
-
-    <div class="rank-dropdown">
-
-        ${html}
-
-    </div>
-
-    `;
-
-}
-
-
-
-
-
-
-
-
-function selectRank(element, rank, index){
-
-    selectedRanks[index] = rank;
-
-
-    let container = element.parentElement.parentElement;
-
-
-    container.innerHTML = `
-
-    <button
-        class="rank-button"
-        onclick="event.stopPropagation(); openRankSelector(this, ${index})"
-    >
-        ${rank} ▼
-    </button>
-
-    `;
-
-
-    activeDropdown = null;
-
-}
-
-
-
-
-
-
-
-function closeActiveDropdown(){
-
-
-    if(activeDropdown){
-
-
-        activeDropdown.innerHTML=
-        activeDropdown.dataset.closed;
-
-
-        activeDropdown=null;
-
-
-    }
-
-
-}
-
-
-
-
-
-
-
-
-document.addEventListener("click",function(){
-
-
-    closeActiveDropdown();
-
-
-});
-
-
-
-
-
-window.onload=function(){
-
-    loadMaps();
-
-};
+</html>
