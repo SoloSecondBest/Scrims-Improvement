@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Brawl Analyzer</title>
+
+
+<style>
+
+
+* {
+    box-sizing: border-box;
+}
+
+
+
+body {
+
+    margin:0;
+    background:#111;
+    color:white;
+    font-family:Arial, sans-serif;
+
+}
+
+
+
+/* LEFT SIDEBAR */
+
+.left-sidebar {
+
+    position:fixed;
+
+    left:0;
+    top:0;
+
+    width:180px;
+
+    height:100vh;
+
+    background:#1b1b1b;
+
+    padding:20px;
+
+}
+
+
+
+/* RIGHT SIDEBAR */
+
+.right-sidebar {
+
+    position:fixed;
+
+    right:0;
+    top:0;
+
+    width:180px;
+
+    height:100vh;
+
+    background:#1b1b1b;
+
+    padding:20px;
+
+}
+
+
+
+/* CENTER */
+
+.main {
+
+    margin-left:180px;
+
+    margin-right:180px;
+
+    padding:40px;
+
+    min-height:100vh;
+
+    text-align:center;
+
+}
+
+
+
+/* BUTTONS */
+
+
+.nav-button,
+.new-button {
+
+
+    width:140px;
+
+    height:45px;
+
+    margin-bottom:15px;
+
+    background:#333;
+
+    color:white;
+
+    border:none;
+
+    border-radius:10px;
+
+    font-size:17px;
+
+    cursor:pointer;
+
+
+}
+
+
+
+.nav-button:hover,
+.new-button:hover {
+
+    background:#555;
+
+}
+
+
+
+.active {
+
+    background:#666;
+
+}
+
+
+
+
+
+/* MAPS */
+
+
+.map-section {
+
+    margin-bottom:40px;
+
+}
+
+
+
+.map-section h2 {
+
+    text-align:left;
+
+    font-size:24px;
+
+}
+
+
+
+.map-container {
+
+    display:flex;
+
+    gap:25px;
+
+}
+
+
+
+.map-card {
+
+    width:160px;
+
+}
+
+
+
+.map-card h3 {
+
+    text-align:center;
+
+    font-size:16px;
+
+}
+
+
+
+.map-card img {
+
+
+    width:160px;
+
+    height:230px;
+
+    object-fit:cover;
+
+    border-radius:12px;
+
+
+}
+
+.brawler-section{
+
+margin-bottom:40px;
+
+}
+
+
+.brawler-section h2{
+
+text-align:left;
+
+}
+
+
+
+.brawler-grid{
+
+display:grid;
+
+grid-template-columns:repeat(9, 1fr);
+
+gap:15px;
+
+}
+
+
+
+.brawler-card{
+
+background:#222;
+
+border-radius:12px;
+
+padding:10px;
+
+text-align:center;
+
+}
+
+
+
+.brawler-card img{
+
+width:80px;
+
+height:80px;
+
+object-fit:contain;
+
+}
+
+
+
+.brawler-card p{
+
+margin:5px;
+
+font-size:14px;
+
+}
+
+/* POPUP BACKGROUND */
+
+.popup-background{
+
+display:none;
+
+position:fixed;
+
+left:0;
+top:0;
+
+width:100%;
+height:100%;
+
+background:rgba(0,0,0,0.7);
+
+justify-content:center;
+
+align-items:center;
+
+z-index:1000;
+
+}
+
+
+
+/* POPUP */
+
+.popup{
+
+width:850px;
+
+min-height:600px;
+
+background:#1f1f1f;
+
+border-radius:18px;
+
+padding:30px;
+
+position:relative;
+
+}
+
+
+
+/* CLOSE BUTTON */
+
+.close-button{
+
+position:absolute;
+
+right:20px;
+
+top:20px;
+
+width:40px;
+
+height:40px;
+
+background:#333;
+
+border:none;
+
+border-radius:10px;
+
+color:white;
+
+font-size:20px;
+
+cursor:pointer;
+
+}
+
+
+
+.close-button:hover{
+
+background:#555;
+
+}
+
+/* MAP AREA */
+
+
+.match-map-area{
+
+display:flex;
+
+justify-content:center;
+
+align-items:flex-start;
+
+margin-top:40px;
+
+min-height:500px;
+
+width:100%;
+
+}
+
+
+
+.center-map-button{
+
+width:180px;
+
+height:50px;
+
+background:#333;
+
+color:white;
+
+border:none;
+
+border-radius:12px;
+
+font-size:17px;
+
+cursor:pointer;
+
+}
+
+
+
+.selected-map-layout{
+
+display:flex;
+
+align-items:flex-start;
+
+justify-content:space-between;
+
+width:100%;
+
+}
+
+
+
+.selected-map-image{
+
+text-align:center;
+
+width:300px;
+
+}
+
+
+
+.selected-map-image img{
+
+width:220px;
+
+height:300px;
+
+object-fit:cover;
+
+border-radius:15px;
+
+}
+
+
+
+.selected-map-info{
+
+width:300px;
+
+display:flex;
+
+justify-content:flex-start;
+
+}
+
+.map-dropdown{
+
+width:300px;
+
+max-height:300px;
+
+overflow-y:auto;
+
+background:#222;
+
+border-radius:12px;
+
+padding:10px;
+
+}
+
+
+
+.map-option{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:8px;
+
+cursor:pointer;
+
+border-radius:8px;
+
+}
+
+
+
+.map-option:hover{
+
+background:#444;
+
+}
+
+
+
+.map-option img{
+
+width:35px;
+
+height:45px;
+
+object-fit:cover;
+
+border-radius:5px;
+
+}
+
+
+
+.map-mode{
+
+font-size:14px;
+
+color:#aaa;
+
+}
+
+.map-right-side{
+
+width:300px;
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+gap:25px;
+
+}
+
+.rank-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.rank-box {
+    width: 85px;
+    height: 45px;
+    position: relative;
+}
+
+.rank-button {
+    width: 85px;
+    height: 45px;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.rank-button:hover {
+    background: #555;
+}
+
+.rank-dropdown{
+    position:absolute;
+    top:50px;
+    left:0;
+
+    width:95px;          /* slightly wider */
+    max-height:220px;
+
+    overflow-y:auto;
+    overflow-x:hidden;   /* <-- hides horizontal scrollbar */
+
+    background:#222;
+    border-radius:10px;
+    padding:5px;
+
+    z-index:100;
+    box-shadow:0 8px 20px rgba(0,0,0,.45);
+}
+
+.rank-option{
+    width:100%;
+    height:35px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border-radius:8px;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.rank-option:hover {
+    background: #555;
+}
+
+.team-title{
+    margin:5px 0 0;
+    font-size:18px;
+    text-align:center;
+}
+
+
+.enemy-brawler-container{
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    align-items:flex-start;
+    gap:10px;
+}
+
+
+.enemy-brawler-slot{
+    width:85px;
+    min-height:110px;
+    text-align:center;
+    position:relative;
+}
+
+
+.empty-brawler-button,
+.selected-brawler-button{
+    width:85px;
+    height:85px;
+    background:#333;
+    color:white;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+
+.empty-brawler-button:hover,
+.selected-brawler-button:hover{
+    background:#555;
+}
+
+
+.selected-brawler-button{
+    padding:5px;
+}
+
+
+.selected-brawler-button img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+
+.enemy-brawler-slot p{
+    margin:6px 0 0;
+    font-size:13px;
+    line-height:16px;
+}
+
+
+.brawler-search{
+    width:210px;
+    height:38px;
+    background:#333;
+    color:white;
+    border:none;
+    border-radius:8px;
+    padding:0 10px;
+    font-size:14px;
+    outline:none;
+}
+
+
+.brawler-picker-dropdown{
+    width:210px;
+    max-height:260px;
+    overflow-y:auto;
+    margin-top:6px;
+    padding:6px;
+    background:#222;
+    border-radius:10px;
+    position:relative;
+    z-index:20;
+}
+
+
+.brawler-picker-option{
+    height:48px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:5px 8px;
+    border-radius:7px;
+    cursor:pointer;
+}
+
+
+.brawler-picker-option:hover{
+    background:#555;
+}
+
+
+.brawler-picker-option img{
+    width:38px;
+    height:38px;
+    object-fit:contain;
+}
+
+.disabled-brawler-option {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.disabled-brawler-option:hover {
+    background: transparent;
+}
+
+</style>
+
+
+</head>
+
+
+
+<body>
+
+
+<div class="left-sidebar">
+
+
+<button class="nav-button active" onclick="openPage('maps', this)">
+Maps
+</button>
+
+
+<button class="nav-button" onclick="openPage('players', this)">
+Players
+</button>
+
+
+<button class="nav-button" onclick="openPage('drafts', this)">
+Drafts
+</button>
+
+
+<button class="nav-button" onclick="openPage('brawlers', this)">
+Brawlers
+</button>
+
+
+</div>
+
+
+
+
+<div class="main" id="content">
+
+
+<!-- YOUR MAP CODE GOES HERE -->
+
+</div>
+
+
+<div class="right-sidebar">
+
+
+<button class="new-button" onclick="openNewMatch()">
+New
+</button>
+
+</div>
+
+<div id="popupBackground" class="popup-background">
+
+    <div class="popup">
+
+        <button class="close-button" onclick="closeNewMatch()">
+            ✕
+        </button>
+
+
+        <div id="matchMapArea" class="match-map-area">
+
+
+            <div class="map-right-side">
+
+            <div id="mapSelectorContainer">
+
+            <button class="center-map-button" onclick="openMapSelector()">
+              Select a map ▼
+            </button>
+
+            </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script src="maps.js"></script>
+<script src="brawlers.js"></script>
+<script src="main.js"></script>
+
+</body>
+
+</html>
