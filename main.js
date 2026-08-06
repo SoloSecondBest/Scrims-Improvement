@@ -131,18 +131,17 @@ function openMapSelector(){
 
 
 
-    let html=`
+   let html=`
 
+   <div class="map-picker-panel">
 
-    <input 
-    id="mapSearch"
-    placeholder="Search map..."
-    onkeyup="searchMaps()">
+        <input 
+           id="mapSearch"
+           placeholder="Search map..."
+           onkeyup="searchMaps()"
+        >
 
-
-
-    <div class="map-dropdown">
-
+        <div class="map-dropdown">
 
     `;
 
@@ -173,6 +172,8 @@ function openMapSelector(){
 
 
     html+=`
+
+       </div>
 
     </div>
 
@@ -462,14 +463,12 @@ function openYourBrawlerSelector(event, index){
 
     let html = `
 
-    <div class="enemy-brawler-picker-panel">
-
     <input
-        class="brawler-search"
-        id="enemyBrawlerSearch${index}"
-        type="text"
-        placeholder="Search brawler..."
-        oninput="searchEnemyBrawlers(${index})"
+       class="brawler-search"
+       id="yourBrawlerSearch${index}"
+       type="text"
+       placeholder="Search brawler..."
+       oninput="searchYourBrawlers(${index})"
     >
 
     <div class="brawler-picker-dropdown">
@@ -534,8 +533,6 @@ function openYourBrawlerSelector(event, index){
 
 
     html += `
-
-       </div>
 
     </div>
 
@@ -657,15 +654,17 @@ function openEnemyBrawlerSelector(event, index) {
 
     let html = `
 
-    <input
-        class="brawler-search"
-        id="enemyBrawlerSearch${index}"
-        type="text"
-        placeholder="Search brawler..."
-        oninput="searchEnemyBrawlers(${index})"
-    >
+    <div class="enemy-brawler-picker-panel">
 
-    <div class="brawler-picker-dropdown">
+        <input
+            class="brawler-search"
+            id="enemyBrawlerSearch${index}"
+            type="text"
+            placeholder="Search brawler..."
+            oninput="searchEnemyBrawlers(${index})"
+        >
+
+        <div class="brawler-picker-dropdown">
 
     `;
 
@@ -727,6 +726,8 @@ function openEnemyBrawlerSelector(event, index) {
 
 
     html += `
+
+      </div>
 
     </div>
 
